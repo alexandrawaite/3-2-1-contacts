@@ -3,6 +3,7 @@ let errorCount = 0;
 let failedContacts = [];
 
 const addContact = function(firstName, lastName, email) {
+  try {
   let contact = {}
   contact.first_name = firstName;
   contact.last_name = lastName;
@@ -14,8 +15,10 @@ const addContact = function(firstName, lastName, email) {
     failedContacts.push(contact);
     throw new Error("Not a string");
   }
+} catch (e) {
+  errorCount++;
 }
-
+}
 const addContacts = function(contacts) {
   contacts.forEach(function(contact){
     try {
@@ -103,9 +106,15 @@ const printContacts = function() {
   })
 }
 
-addContacts([[6, "Peace", "apeace21@microsoft.com"], ["Allyson", 22, "aroubay2f@canalblog.com"], ["Mead", 52, "mfullman2r@nyu.edu"]])
+////////////////////////////////////////////////////////
 
 
-// addContact("Joe", "Shmo", 4)
+addContacts([[6, "Peace", "apeace21@microsoft.com"], ["Allyson", 22, "aroubay2f@canalblog.com"], ["Mead", 52, "mfullman2r@nyu.edu"], ["Anna", "Paquin", "apaq@gmail.com"]])
+
+addContact("Joe", "Wilson", "jwils@aol.com")
+
+console.assert(allContacts[allContacts.length - 1].first_name === "Joe" && allContacts[allContacts.length - 1].last_name === "Wilson" && allContacts[allContacts.length - 1].email === "jwils@aol.com", "contact was not added")
+
+console.assert(failedContacts.length === 3, "there should be three failed contacts")
 
 printContacts()
