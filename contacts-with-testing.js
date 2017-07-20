@@ -3,27 +3,22 @@ let errorCount = 0;
 let failedContacts = [];
 
 const addContact = function(firstName, lastName, email) {
-  try {
   let contact = {}
   contact.first_name = firstName;
   contact.last_name = lastName;
   contact.email = email;
   if (typeof firstName === 'string' && typeof lastName === 'string' && typeof email === 'string') {
     allContacts.push(contact);
-    return true;
   } else {
-    failedContacts.push(contact);
-    throw new Error("Not a string");
+    throw contact;
   }
-} catch (e) {
-  errorCount++;
-}
 }
 const addContacts = function(contacts) {
   contacts.forEach(function(contact){
     try {
       addContact(contact[0], contact[1], contact[2])
-    } catch (e) {
+    } catch (error) {
+      failedContacts.push(error);
       errorCount++;
     }
   })
@@ -99,8 +94,7 @@ const printContacts = function() {
     );
   })
   console.log(bar);
-  console.log("Could not import " + errorCount + " contacts.");
-
+  console.log("\nCould not import " + errorCount + " contacts.");
   failedContacts.forEach(function(contact) {
     console.log("First: " + contact.first_name + ", Last: " + contact.last_name + ", Email: " + contact.email);
   })
@@ -109,12 +103,14 @@ const printContacts = function() {
 ////////////////////////////////////////////////////////
 
 
-addContacts([[6, "Peace", "apeace21@microsoft.com"], ["Allyson", 22, "aroubay2f@canalblog.com"], ["Mead", 52, "mfullman2r@nyu.edu"], ["Anna", "Paquin", "apaq@gmail.com"]])
-
 addContact("Joe", "Wilson", "jwils@aol.com")
 
+addContacts([[6, "Peace", "apeace21@microsoft.com"], ["Allyson", 22, "aroubay2f@canalblog.com"], ["Mead", 52, "mfullman2r@nyu.edu"]])
+
+// tests to see if contact was pushed to allContacts array
 console.assert(allContacts[allContacts.length - 1].first_name === "Joe" && allContacts[allContacts.length - 1].last_name === "Wilson" && allContacts[allContacts.length - 1].email === "jwils@aol.com", "contact was not added")
 
+// tests to see if three invalid contacts were added
 console.assert(failedContacts.length === 3, "there should be three failed contacts")
 
 printContacts()
