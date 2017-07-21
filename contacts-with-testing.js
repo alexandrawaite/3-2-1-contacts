@@ -111,6 +111,6 @@ addContacts([[6, "Peace", "apeace21@microsoft.com"], ["Allyson", 22, "aroubay2f@
 console.assert(allContacts[allContacts.length - 1].first_name === "Joe" && allContacts[allContacts.length - 1].last_name === "Wilson" && allContacts[allContacts.length - 1].email === "jwils@aol.com", "contact was not added")
 
 // tests to see if three invalid contacts were added
-console.assert(failedContacts.length === 3, "there should be three failed contacts")
+console.assert(failedContacts.length === 3, "three contacts were not added")
 
 printContacts()
